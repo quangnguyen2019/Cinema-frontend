@@ -1,7 +1,12 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import DetailMovie from "./views/DetailMovie";
+import SignIn from "./views/SignIn";
+import SignUp from "./views/SignUp";
+import VueSession from 'vue-session';
 
+Vue.use(VueSession)
 Vue.use(Router);
 
 export default new Router({
@@ -21,6 +26,18 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },
+    {
+      path: "/movie/:id",
+      component: DetailMovie
+    },
+    {
+      path: "/signIn",
+      component: SignIn
+    },
+    {
+      path: '/signUp',
+      component: SignUp
     }
   ]
 });
