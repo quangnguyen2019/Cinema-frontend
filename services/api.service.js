@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const ApiService = {
-    get(resource, data) {
+    get(resource) {
         return axios.get(resource)
     },
 
