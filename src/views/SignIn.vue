@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SignInAuth from '../components/SignIn.component'
+import SignInAuth from '../components/SignIn.comp'
 
 export default {
     name: "SignIn",
@@ -17,5 +17,5 @@ export default {
             }
         }
     }
-}
-</script>
+};
+</script> 

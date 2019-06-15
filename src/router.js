@@ -1,10 +1,12 @@
 import Vue from "vue";
 import Router from "vue-router";
+import VueSession from 'vue-session';
 import Home from "./views/Home.vue";
 import DetailMovie from "./views/DetailMovie";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
-import VueSession from 'vue-session';
+import Booking from './components/Booking.comp';
+import Account from './components/Account.comp';
 
 Vue.use(VueSession)
 Vue.use(Router);
@@ -31,13 +33,21 @@ export default new Router({
       path: "/movie/:id",
       component: DetailMovie
     },
-    {
-      path: "/signIn",
-      component: SignIn
-    },
+    // {
+    //   path: "/signIn",
+    //   component: SignIn
+    // },
     {
       path: '/signUp',
       component: SignUp
+    },
+    {
+      path: '/booking',
+      component: Booking
+    },
+    {
+      path: '/account',
+      component: Account
     }
   ]
 });

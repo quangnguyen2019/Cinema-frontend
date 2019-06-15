@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SignUpAuth from '../components/SignUp.component'
+import SignUpAuth from '../components/SignUp.comp'
 
 export default {
     name: "SignUp",

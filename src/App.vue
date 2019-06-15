@@ -1,75 +1,35 @@
 <template>
   <div id="app">
-    <div id="nav">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <span class="navbar-brand">Navbar</span>
+    <div class="container-fluid">
+      <div class="container">
+        <div id="nav">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <router-link class="navbar-brand mr-5" to="/" href="/">CINEMA</router-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <router-link to="/" class="nav-link">Home</router-link>
-                    </li>
+              <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <router-link to="/booking" class="nav-link">Booking</router-link>
+                  </li>
 
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/about">About</router-link>
-                    </li>
-                </ul>
+                  <li class="nav-item">
+                      <router-link class="nav-link" to="/about">About</router-link>
+                  </li>
+              </ul>
 
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                
-                <router-link to="/signIn" class="btnSignIn" v-if="!this.$session.exists()">Sign In</router-link>
-                <button class="btn btn-outline-success ml-3" @click='SignOut' v-else>Sign Out</button>
+              <button class="btnSignIn" data-toggle="modal" data-target="#signIn" v-if="!this.$session.exists()">
+                  Sign In
+              </button>
+              <button class="btn btn-outline-success ml-3" @click='SignOut' v-else>Sign Out</button>
             </div>
-        </nav>
-    </div>
-
-    <router-view />
-
-    <!-- <div class="footer">
-      <footer class="page-footer font-small special-color-dark pt-4">
-        <div class="container">
-          <ul class="list-unstyled list-inline text-center">
-            <li class="list-inline-item">
-              <a class="btn-floating btn-fb mx-1">
-                <i class="fab fa-facebook-f"> </i>
-              </a>
-            </li>
-
-            <li class="list-inline-item">
-              <a class="btn-floating btn-tw mx-1">
-                <i class="fab fa-twitter"> </i>
-              </a>
-            </li>
-
-            <li class="list-inline-item">
-              <a class="btn-floating btn-gplus mx-1">
-                <i class="fab fa-google-plus-g"> </i>
-              </a>
-            </li>
-
-            <li class="list-inline-item">
-              <a class="btn-floating btn-li mx-1">
-                <i class="fab fa-linkedin-in"> </i>
-              </a>
-            </li>
-
-            <li class="list-inline-item">
-              <a class="btn-floating btn-dribbble mx-1">
-                <i class="fab fa-dribbble"> </i>
-              </a>
-            </li>
-          </ul>
+          </nav>
         </div>
-
-        <div class="footer-copyright text-center py-3">© 2019 Copyright: Cinema </div>
-      </footer>
-    </div> -->
+      </div>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -84,39 +44,62 @@ export default {
 }
 </script>
 
-
 <style scoped>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
 
-.navbar {
-  margin: 0 5rem;
-}
+  #app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+  }
 
-.nav-link a {
-  color: #2c3e50;
-}
+  .container-fluid {
+    box-shadow: 1px 2px 12px rgb(0, 0, 0, .1);
+  }
 
-.btnSignIn {
-  margin-left: 20px;
-  color: #42b983;
-  border: none;
-  transition: all .4s ;
-}
+  .navbar {
+    padding: .6rem 0;
+    font-size: 18px;
+  }
 
-.btnSignIn:hover {
-  text-decoration: none;
-  border: 1px solid #42b983;
-  padding: 6px 13px;
-  border-radius: 5px;
-}
+  .navbar-brand {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;;
+    font-size: 32px;
+    color: #42b983;
+  }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  .navbar-brand:hover {
+    color: #42b983 !important;
+  }
+
+  .nav-link {
+    color: rgb(0, 0, 0, .5) !important;
+    transition: .2s;
+  }
+
+  .nav-link:hover {
+    color: rgb(0, 0, 0, .9) !important;
+  }
+
+  #nav a.router-link-exact-active {
+    color: #42b983;
+  }
+
+  .btnSignIn {
+    margin-left: 20px;
+    color: #42b983;
+    border: none;
+    transition: all .4s ;
+    background-color: transparent;
+    outline: none;
+  }
+
+  .btnSignIn:hover {
+    text-decoration: none;
+    border: 1px solid #42b983;
+    padding: 6px 13px;
+    border-radius: 5px;
+  }
 
 </style>

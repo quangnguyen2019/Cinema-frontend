@@ -1,6 +1,39 @@
 <template>
     <div class="wrapper-sign-in">
-        <form class="formSignIn" @submit.prevent="SignInAuth">
+        <div class="modal fade" id="signIn" tabindex="-1" role="dialog" aria-labelledby="signInUpModal" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="width: 26rem">
+                <div class="modal-content formSignIn">
+                    <form class="modal-body" @submit.prevent="SignInAuth">
+                        <!-- <form class="formSignIn" @submit.prevent="SignInAuth"> -->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h1 class="mt-3 mb-5">Welcome</h1>
+
+                        <div class="input-group">
+                            <input type="text" id="email" v-model="emailValue" required >
+                            <label for="email"> Email </label>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="password" v-model="passwordValue" required>
+                            <label for="password"> Password </label>
+                        </div>
+
+                        <button type="submit" class="btnSign-In-UpForm">Sign In</button>
+
+                        <div id="snackbar">{{ error }}</div>
+
+                        <p class="linkSignUp">
+                            Don&apos;t have an account?
+                            <router-link to="/signUp"> Sign Up </router-link>
+                            <router-view></router-view>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- <form class="formSignIn" @submit.prevent="SignInAuth">
             <h1 class="mt-3 mb-5">Welcome</h1>
 
             <div class="input-group">
@@ -21,7 +54,7 @@
                 <router-link to="/signUp"> Sign Up </router-link>
                 <router-view></router-view>
             </p>
-        </form>
+        </form> -->
     </div>
 </template>
 
@@ -94,28 +127,29 @@ export default {
     }
 
     body {
-        font-family: sans-serif;
-        background-color: rgb(239, 239, 239);
         position: relative;
     }
 
     .wrapper-sign-in {
-        position: absolute;
-        display: flex;
+        /* position: absolute; */
+        /* display: flex;
         justify-content: center;
-        align-items: center;
-        top: 15%;
+        align-items: center; */
+        /* top: 15%;
         left: 36%;
-        height: 100vh;
+        height: 100vh; */
+    }
+
+    .modal-dialog .modal-content {
+        height: 36rem;
+        /* width: 26rem; */
     }
 
     .formSignIn {
         background-color: #fff;
-        padding: 3rem;
+        padding: 2.5rem;
         border-radius: 20px;
-        height: 35rem;
-        width: 25rem;
-        box-shadow: 2px 4px 12px rgb(0, 0, 0, 0.2);
+        /* box-shadow: 2px 4px 12px rgb(0, 0, 0, 0.2); */
     }
 
     .formSignIn h1 {
@@ -165,10 +199,6 @@ export default {
 
     .btnSign-In-UpForm:hover {
         background-position: 100% 0;
-    }
-
-    .btnSign-In-UpForm:focus {
-        /* outline: none; */
     }
 
     #error ul {
