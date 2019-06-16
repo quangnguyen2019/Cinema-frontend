@@ -1,76 +1,84 @@
 <template>
     <div id="movie-list">
         <div class="container">
-            <h1 class="my-5 text-center"> Movie </h1>
-            
-            <div class="row">
-                <div class="col-md-3 top-films" v-for="movie in movies" :key="movie.id">
-                    <router-link :to="'/movie/' + movie.id">
-                        <img v-bind:src="movie.poster_image" class="card-img-top mb-3" height="86%"> 
-                    </router-link> 
-                    <router-view></router-view>
-
-                    <div class="top-films-title">
-                        <router-link :to="'/movie/' + movie.id">
-                            {{ movie.name }}
-                        </router-link>
-                    </div>
-                </div>
-            </div>
+            <ul class="nav nav-tabs my-4">
+                <li class="active li-tab" @click="getMoviesNewlyReleased"> PHIM ĐANG CHIẾU </li>
+                <li> / </li>
+                <li class="li-tab" @click="getMoviesHasMostViews"> PHIM ĐƯỢC XEM NHIỀU NHẤT </li>
+            </ul>
+            <MoviesList :moviesData="movies"></MoviesList>
         </div>
     </div>
 </template>
 
+
 <script>
 import MovieService from '../../services/movie.service'
+import MoviesList from '@/components/MoviesList.comp'
 import { BASE_DOMAIN } from '../../services/urls'
 
 export default {
-    name: 'HomeComponent',
+    name: 'Home.comp',
+    components: {
+        MoviesList
+    },
     data() {
         return {
-            movies: []
+            movies:[],
+            moviesShowing: [],
+            moviesFavorite: [],
+            selectedTab: 'ByShowing'
         }
     },
     created() {
         MovieService
-            .getMovies()
+            .getMoviesNewly()
             .then(response => {
                 // JSON responses are automatically parsed.
-                this.movies = response.data;
-                this.movies.forEach((movie) => {
+                this.moviesShowing = response.data;
+                this.moviesShowing.forEach((movie) => {
                     movie.poster_image = BASE_DOMAIN + '/image/poster/' + movie.poster_image;
                 });
-            }
-        )
+
+                this.movies = this.moviesShowing;
+            });
+            
+        MovieService
+            .getMoviesMostViews()
+            .then(response => {
+                this.moviesFavorite = response.data;
+                this.moviesFavorite.forEach(movie => {
+                    movie.poster_image = BASE_DOMAIN + '/image/poster/' + movie.poster_image;
+                })
+            });
     },
-    mounted() {
-        console.log('The component is mounted.');
+    methods: {
+        getMoviesNewlyReleased() {
+            this.movies = this.moviesShowing;
+        },
+        getMoviesHasMostViews() {
+            this.movies = this.moviesFavorite;
+        }
     }
 }
 </script>
 
-<style scoped>
-    .top-films {
-        box-sizing: border-box;
-        margin-bottom: 40px;
-    }
-
-    .top-films a {
-        color: black;
-    }
-
-    .top-films-title {
-        box-sizing: border-box;
-        text-align: center;
+<style>
+    #movie-list li {
+        /* margin: 15px; */
+        padding: 8px;
+        font-size: 1.2rem;
         font-family: 'Roboto Condensed', sans-serif;
-        font-size: 1.1rem;
-        font-weight: 600;
-        letter-spacing: 2px;
     }
 
-    .top-films-title a:hover {
-        text-decoration: none;
+    #movie-list .li-tab {
+        cursor: pointer;
+        transition: .2s;
     }
 
+    #movie-list .li-tab:hover {
+        color: #42b983;
+        background: rgb(248, 248, 248);
+        border-radius: 15px;
+    }
 </style>

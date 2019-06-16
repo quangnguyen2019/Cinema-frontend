@@ -5,6 +5,8 @@ const URL = {
     // Movie
     GET_MOVIES: BASE_DOMAIN + '/movies/getMovies',
     GET_MOVIE: BASE_DOMAIN + '/movies/getMovie/',
+    GET_MOVIES_NEWLY: BASE_DOMAIN + '/movies/getMoviesNewlyReleased',
+    GET_MOVIES_MOST_VIEWS: BASE_DOMAIN + '/movies/getMoviesHasMostViews',
 
     // User
     GET_USERS: BASE_DOMAIN + '/users/getUsers',

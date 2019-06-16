@@ -9,6 +9,12 @@ const MovieService = {
     },
     getMovie(id) {
         return ApiService.get(URL.GET_MOVIE + id)
+    },
+    getMoviesNewly() {
+        return ApiService.get(URL.GET_MOVIES_NEWLY)
+    },
+    getMoviesMostViews() {
+        return ApiService.get(URL.GET_MOVIES_MOST_VIEWS)
     }
 }
 

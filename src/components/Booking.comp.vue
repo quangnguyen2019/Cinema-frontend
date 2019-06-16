@@ -3,12 +3,12 @@
         <div class="row searchByShowtime">
             <div class="col-4">
                <h5 class="mb-4">CHOOSE A THEATER</h5>
-               <CinemaGroupList :cinemaGroupsData="cinemaGroups"  @clickedSomething='handleClickParent' />
+               <CinemaGroupSelector :cinemaGroupsData="cinemaGroups"  @clickedSomething='handleClickParent' />
             </div>
 
             <div class="col-4">
                 <h5 class="mb-4">CHOOSE A MOVIE</h5>
-                <MovieList :moviesData="movies" />
+                <MovieSelector :moviesData="movies" />
             </div>
 
             <div class="col-4">
@@ -29,14 +29,14 @@
 import CinemaGroupService from '../../services/cinemaGroup.service'
 import MovieService from '../../services/movie.service'
 import ShowtimeService from '../../services/showtime.service'
-import CinemaGroupList from './CinemaGroupList'
-import MovieList from './MovieList.comp'
+import CinemaGroupSelector from './CinemaGroupSelector.comp'
+import MovieSelector from './MovieSelector.comp'
 
 export default {
     name: 'searchShowtime',
     components: {
-        CinemaGroupList,
-        MovieList
+        CinemaGroupSelector,
+        MovieSelector
     },
     data() {
         return {

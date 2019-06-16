@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: 'MovieList',
+    name: 'MovieSelector',
     props: {
         moviesData: Array
     }

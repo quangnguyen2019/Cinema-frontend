@@ -113,21 +113,9 @@ export default {
 </script>
 
 <style>
-    html {
-        overflow: scroll;
-        overflow-x: hidden;
-    }
-
-    ::-webkit-scrollbar {
-        width: 3px; 
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: rgb(160, 160, 160);
-    }
-
     body {
         position: relative;
+        overflow: hidden;
     }
 
     .wrapper-sign-in {

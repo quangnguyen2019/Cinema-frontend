@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="col-9">
-                    <iframe v-show="isShowing" src="http://www.weather.gov/" frameborder="0"></iframe>
+                    <div v-show="isShowing"></div>
                 </div>
             </div>
         </div>
