@@ -1,12 +1,25 @@
 <template>
     <div id="movie-list">
         <div class="container">
+
             <ul class="nav nav-tabs my-4">
-                <li class="active li-tab" @click="getMoviesNewlyReleased"> PHIM ĐANG CHIẾU </li>
-                <li> / </li>
-                <li class="li-tab" @click="getMoviesHasMostViews"> PHIM ĐƯỢC XEM NHIỀU NHẤT </li>
+                <li class="nav-item"  @click="getMoviesNewlyReleased"> 
+                    <a href="#" data-toggle="tab" class="nav-link active">
+                        PHIM ĐANG CHIẾU
+                    </a>    
+                </li>
+
+                <li class="separator-line"> / </li>
+
+                <li class="nav-item"  @click="getMoviesHasMostViews"> 
+                    <a href="#" data-toggle="tab" class="nav-link">
+                        PHIM ĐƯỢC XEM NHIỀU NHẤT
+                    </a>    
+                </li>
             </ul>
+
             <MoviesList :moviesData="movies"></MoviesList>
+
         </div>
     </div>
 </template>
@@ -65,20 +78,33 @@ export default {
 
 <style>
     #movie-list li {
-        /* margin: 15px; */
         padding: 8px;
         font-size: 1.2rem;
         font-family: 'Roboto Condensed', sans-serif;
     }
 
-    #movie-list .li-tab {
-        cursor: pointer;
+    #movie-list .separator-line {
+        padding-top: 15px;
+    }
+
+    #movie-list .nav-tabs .nav-link {
+        border: none !important;
+    }
+
+    #movie-list .nav-link {
+        color: black;
         transition: .2s;
     }
 
-    #movie-list .li-tab:hover {
+    #movie-list .nav-link:hover {
         color: #42b983;
-        background: rgb(248, 248, 248);
+    }
+   
+    #movie-list .active {
+        -webkit-appearance: none;
+        color: #42b983;
+        background: rgb(245, 243, 243);
         border-radius: 15px;
+        border: none;
     }
 </style>
