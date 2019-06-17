@@ -5,6 +5,7 @@ import Home from "./views/Home.vue";
 import DetailMovie from "./views/DetailMovie";
 import SignIn from "./views/SignIn";
 import SignUp from "./views/SignUp";
+import SearchShowtime from '@/components/SearchShowtime.comp';
 import Booking from './components/Booking.comp';
 import Account from './components/Account.comp';
 
@@ -40,6 +41,10 @@ export default new Router({
     {
       path: '/signUp',
       component: SignUp
+    },
+    {
+      path: '/searchShowtime',
+      component: SearchShowtime
     },
     {
       path: '/booking',

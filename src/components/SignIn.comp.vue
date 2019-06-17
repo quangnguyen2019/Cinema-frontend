@@ -8,7 +8,8 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h1 class="mt-3 mb-5">Welcome</h1>
+
+                        <h1 class="mt-3 mb-5 sign-in-title">Welcome</h1>
 
                         <div class="input-group">
                             <input type="text" id="email" v-model="emailValue" required >
@@ -26,35 +27,11 @@
                         <p class="linkSignUp">
                             Don&apos;t have an account?
                             <router-link to="/signUp"> Sign Up </router-link>
-                            <router-view></router-view>
                         </p>
                     </form>
                 </div>
             </div>
         </div>
-
-        <!-- <form class="formSignIn" @submit.prevent="SignInAuth">
-            <h1 class="mt-3 mb-5">Welcome</h1>
-
-            <div class="input-group">
-                <input type="text" id="email" v-model="emailValue" required >
-                <label for="email"> Email </label>
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" v-model="passwordValue" required>
-                <label for="password"> Password </label>
-            </div>
-
-            <button type="submit" class="btnSign-In-UpForm">Sign In</button>
-
-            <div id="snackbar">{{ error }}</div>
-
-            <p class="linkSignUp">
-                Don&apos;t have an account?
-                <router-link to="/signUp"> Sign Up </router-link>
-                <router-view></router-view>
-            </p>
-        </form> -->
     </div>
 </template>
 
@@ -118,14 +95,8 @@ export default {
         overflow: hidden;
     }
 
-    .wrapper-sign-in {
-        /* position: absolute; */
-        /* display: flex;
-        justify-content: center;
-        align-items: center; */
-        /* top: 15%;
-        left: 36%;
-        height: 100vh; */
+    .sign-in-title {
+        user-select: none;
     }
 
     .modal-dialog .modal-content {

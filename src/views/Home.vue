@@ -1,19 +1,16 @@
 <template>
     <div>
         <Home />
-        <SignIn />
     </div>
 </template>
 
 <script>
 import Home from '../components/Home.comp'
-import SignIn from '../views/SignIn'
 
 export default {
     name: 'home',
     components: {
-        Home,
-        SignIn
+        Home
     }
 }
 </script>

@@ -9,7 +9,7 @@
                     </a>    
                 </li>
 
-                <li class="separator-line"> / </li>
+                <li class="separator-line"> | </li>
 
                 <li class="nav-item"  @click="getMoviesHasMostViews"> 
                     <a href="#" data-toggle="tab" class="nav-link">
@@ -68,9 +68,11 @@ export default {
     methods: {
         getMoviesNewlyReleased() {
             this.movies = this.moviesShowing;
+            this.selectedTab = 'ByShowing';
         },
         getMoviesHasMostViews() {
             this.movies = this.moviesFavorite;
+            this.selectedTab = 'ByFavourite';
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div>   
-        <h4 class="text-center mb-5">DANH SÁCH PHIM</h4>
+        <h4 class="text-center mb-5 movie-list-title">DANH SÁCH PHIM</h4>
 
         <div class="row">
             <div class="col-md-3 top-films" v-for="movie in moviesData" :key="movie.id">
@@ -31,6 +31,10 @@ export default {
 </script>
 
 <style scoped>
+    .movie-list-title {
+        user-select: none;
+    }
+
     .top-films {
         box-sizing: border-box;
         margin-bottom: 40px;

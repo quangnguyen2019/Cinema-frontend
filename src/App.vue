@@ -11,10 +11,6 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <router-link to="/booking" class="nav-link">Booking</router-link>
-                  </li>
-
                   <li class="nav-item">
                       <router-link class="nav-link" to="/about">About</router-link>
                   </li>
@@ -29,12 +25,19 @@
         </div>
       </div>
     </div>
+    
+    <SignIn />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import SignIn from '@/views/SignIn'
+
 export default {
+  components: {
+    SignIn
+  },
   methods: {
     SignOut() {
       this.$session.destroy();
