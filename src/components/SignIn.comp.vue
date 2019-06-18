@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper-sign-in">
         <div class="modal fade" id="signIn" tabindex="-1" role="dialog" aria-labelledby="signInUpModal" aria-hidden="true">
-            <div class="modal-dialog" role="document" style="width: 26rem">
+            <div class="modal-dialog cascading-modal" role="document" style="width: 26rem">
                 <div class="modal-content formSignIn">
                     <form class="modal-body" @submit.prevent="SignInAuth">
                         <!-- <form class="formSignIn" @submit.prevent="SignInAuth"> -->
@@ -12,22 +12,20 @@
                         <h1 class="mt-3 mb-5 sign-in-title">Welcome</h1>
 
                         <div class="input-group">
-                            <input type="text" id="email" v-model="emailValue" required >
-                            <label for="email"> Email </label>
+                            <input type="text" id="emailSignIn" v-model="emailValue" required >
+                            <label for="emailSignIn"> Email </label>
                         </div>
                         <div class="input-group">
-                            <input type="password" id="password" v-model="passwordValue" required>
-                            <label for="password"> Password </label>
+                            <input type="password" id="passwordSignIn" v-model="passwordValue" required>
+                            <label for="passwordSignIn"> Password </label>
                         </div>
 
                         <button type="submit" class="btnSign-In-UpForm">Sign In</button>
 
-                        <div id="snackbar">{{ error }}</div>
-
-                        <p class="linkSignUp">
+                        <!-- <p class="linkSignUp">
                             Don&apos;t have an account?
                             <router-link to="/signUp"> Sign Up </router-link>
-                        </p>
+                        </p> -->
                     </form>
                 </div>
             </div>
@@ -37,7 +35,6 @@
 
 <script>
 import UserService from '../../services/user.service'
-import Axios from 'axios'
 
 export default {
     name: "Sign-In-Component",
@@ -46,7 +43,6 @@ export default {
             user: {},
             emailValue: '',
             passwordValue: '',
-            error: ''
         }
     },
     methods: {
@@ -58,33 +54,30 @@ export default {
                     this.user = response.data;
 
                     if (this.emailValue === '') {
-                        this.error = 'Email is empty !!';
+                        alert('Email is empty !!');
                     }
 
                     if (this.user.success === false) {
-                        this.error = "User Account does not exist !!";
+                        alert( "User Account does not exist !!");
                         return;
                     }
 
                     if (this.passwordValue === '') {
-                        this.error = 'Password is empty !!';
+                        alert('Password is empty !!');
                         return;
                     }
 
-                    if (this.user.password != this.passwordValue) {
-                        this.error = 'Password does not correct !!';
+                    if (this.user.password!= this.passwordValue) {
+                        alert('Password does not correct !!');
                         return;
                     }
 
-                    this.$session.start()
-                    this.$session.set('user-id', this.user.id)
-                    this.$router.push('/');
+                    // console.log('Logged User: ', this.user);
+                    this.$session.start();
+                    this.$session.set('user-id', this.user.id);
+                    location.reload();
                 });
-
-            var x = document.getElementById("snackbar");
-            x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        }
+        },
     }
 }
 </script>
@@ -99,8 +92,8 @@ export default {
         user-select: none;
     }
 
-    .modal-dialog .modal-content {
-        height: 36rem;
+    #signIn .modal-dialog .modal-content {
+        height: 35rem;
         /* width: 26rem; */
     }
 
@@ -145,7 +138,7 @@ export default {
 
     .btnSign-In-UpForm {
         width: 100%;
-        padding: 13px;
+        padding: 15px;
         border: none;
         border-radius: 25px;
         color: #fff;
@@ -153,11 +146,15 @@ export default {
         background-image: linear-gradient(120deg, #25aae1, #4481eb, #04befe, #3f86ed);
         transition: all .4s;
         box-shadow: 1px 4px 12px rgb(0, 0, 0, 0.4);
-        margin-top: 15px;
+        margin-top: 25px;
     }
 
     .btnSign-In-UpForm:hover {
         background-position: 100% 0;
+    }
+
+    .btnSign-In-UpForm:focus {
+        outline: none;
     }
 
     #error ul {

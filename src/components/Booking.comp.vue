@@ -12,10 +12,10 @@
                             <span class="seat seat-selecting"></span>
                             <span class="note">Ghế đang chọn</span>
                         </div>
-                        <div class="seat-note">
+                        <!-- <div class="seat-note">
                             <span class="seat seat-selected"></span>
                             <span class="note">Ghế đang có người chọn</span>
-                        </div>
+                        </div> -->
                         <div class="seat-note">
                             <span class="seat seat-booked"></span>
                             <span class="note">Ghế đã đặt</span>
@@ -27,43 +27,54 @@
                     <div class="seat-container">
                         <img class="mb-5" src="@/assets/bg-screen.png" width=100%>
 
-                        <div class="seat-row" v-for="character in charArray" :key="character">
-                            <div class="seat" v-for="numb in numberArray" :key="numb">
-                                {{ character }}{{ numb }}
+                        <div class="seat-row" >
+                            <div class="seat seat-display" 
+                                v-bind:class="{ 'seat-selecting': seat.isSelected, 'seat-booked': seat.booked}" 
+                                v-for="(seat, index) in seats" :key="index"
+                                @click="selectSeat(seat)">
+                                    {{ seat.name }}
                             </div>
                         </div>
+
+                        <!-- <div class="seat-row" v-for="character in charArray" :key="character">
+                            <span v-for="numb in numberArray" :key="numb">
+                                <input type="checkbox" class="seat" :id="character+numb" :value="character+numb" v-model="seats"/>
+                                <label :for="character+numb">{{ character }}{{ numb }}</label>
+                            </span>
+                        </div> -->
                     </div>
                 </div>
                 
                 <div class="col-4">
                     <div class="book-info-container">
                         <div class="booking-title">Thông tin đặt vé</div>
-                        <div class="booking-content">
+                        <form class="booking-content" @submit.prevent="Booking" v-for="(infor,index) in infoBooking" :key="index">
                             <div class="info-row">
                                 <span class="title">Phim:</span>
-                                X-Men: Phượng Hoàng Bóng Tối
+                                {{ infor.movie_name }}
                             </div>
                             <div class="info-row">
                                 <span class="title">Rạp:</span>
-                                CGV Aeon Tân Phú
+                                {{ infor.cinema_group_name }}
                             </div>
                             <div class="info-row">
                                 <span class="title">Suất Chiếu:</span> 
-                                Thứ 7 (17/6/2019) 19:40
+                                {{ infor.start_time }}
                             </div>
                             <div class="info-row">
                                 <span class="title">Ghế:</span> 
-                                G5, G6
+                                <span>{{ selectingSeatsText }}</span>
+                                <!-- <span v-for="seat in seats" :key="seat"> {{ seat }}, </span> -->
                             </div>
                             <div class="info-row total">
                                 <span class="title">Tổng Cộng:</span> 
-                                <span class="price">240.000 ₫</span>
+                                <span class="price">{{ priceTotal }} ₫</span>
                             </div>
 
                             <div class="btn-booking">
-                                <button class="btn">Đặt Vé</button>
+                                <button type="submit" class="btn">Đặt Vé</button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -72,12 +83,103 @@
 </template>
 
 <script>
+import ShowtimeService from "../../services/showtime.service"
+import BookingService from '../../services/booking.service'
+
 export default {
     name: 'Booking.comp',
     data() {
         return {
-            charArray: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'],
-            numberArray: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13']
+            seats: [],
+            infoBooking: [],
+            bookedSeats: [],
+            selectingSeatsText: '',
+            priceTotal: 0
+        }
+    },
+    created() {
+        // Tao ra day ghe trong rap
+        var charArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
+        
+        charArray.forEach(char => {
+            for (let i = 1; i <= 13; i++) {
+                let seat = {
+                    name: char + i,
+                    isSelected: false,
+                    booked: false
+                }
+                this.seats.push(seat);
+            }
+        });
+
+        ShowtimeService
+            .getAllInfoByShowtime(this.$route.params.id)
+            .then(response => {
+                this.infoBooking = response.data;
+            });
+
+        BookingService
+            .getSeatsByShowtime(this.$route.params.id)
+            .then(response => {
+                console.log("responst data: ", response.data);
+
+                response.data.forEach(val => {
+                    this.bookedSeats = this.bookedSeats.concat(val.seats.split(', '));
+                });
+
+                this.seats.forEach(seat => {
+                    if (this.bookedSeats.indexOf(seat.name) >= 0) {
+                        seat.booked = true;
+                    }
+                });
+            });
+    },
+    methods: {
+        selectSeat(seat) {
+            // Neu ghe da dat, thi khong lam gi nua
+            if (seat.booked) {
+                return;
+            }
+
+            seat.isSelected = !seat.isSelected;
+
+            let selectingSeats = [];
+
+            this.seats.forEach(seat => {
+                if (seat.isSelected) {
+                    selectingSeats.push(seat.name);
+                }
+            });
+
+            this.selectingSeatsText = selectingSeats.join(', ');
+            this.priceTotal = selectingSeats.length * this.infoBooking[0].price;
+        },
+
+        Booking() {
+            if (this.selectingSeatsText === '') {
+                alert(" Bạn chưa chọn ghế !");
+            }
+            else {
+                let d = new Date();
+
+                let bookingInfo = {
+                    user_id: this.$session.get('user-id'),
+                    showtime_id: this.$route.params.id,
+                    created_date: d.toDateString().substr(4),
+                    created_time: d.toTimeString().substr(0,8),
+                    seats: this.selectingSeatsText,
+                    total: this.priceTotal
+                }
+
+                BookingService
+                    .addBooking(bookingInfo)
+                    .then(response => {
+                        console.log("Hello success");
+                        alert("Đã đặt vé thành công !");
+                    });
+
+                // console.log(bookingInfo);
+            }
         }
     }
 }
@@ -97,11 +199,29 @@ export default {
         text-align: center;
     }
 
+    .seat-row input {
+        -webkit-appearance: none;
+        display: inline-block;
+        width: 30px;
+        height: 25px;
+        background-color: #c7c7c7;
+        position: relative;
+    }
+
+    .seat-row label {
+        /* position: absolute; */
+        top: 10px;
+    }
+
+    .seat-display {
+        display: inline-block;
+    }
+
     .seat {
         display: inline-block;
         padding: 5px;
         background-color: rgb(209, 209, 209);
-        margin: 3px 4px;
+        margin: 3px 3px;
         font-size: 12px;
         font-weight: 600;
         border-radius: 4px;

@@ -3,10 +3,8 @@ import Router from "vue-router";
 import VueSession from 'vue-session';
 import Home from "./views/Home.vue";
 import DetailMovie from "./views/DetailMovie";
-import SignIn from "./views/SignIn";
-import SignUp from "./views/SignUp";
 import SearchShowtime from '@/components/SearchShowtime.comp';
-import Booking from './components/Booking.comp';
+import Booking from './views/Booking';
 import Account from './components/Account.comp';
 
 Vue.use(VueSession)
@@ -39,15 +37,11 @@ export default new Router({
     //   component: SignIn
     // },
     {
-      path: '/signUp',
-      component: SignUp
-    },
-    {
       path: '/searchShowtime',
       component: SearchShowtime
     },
     {
-      path: '/booking',
+      path: '/booking/:id',
       component: Booking
     },
     {

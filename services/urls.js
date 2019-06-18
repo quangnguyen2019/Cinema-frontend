@@ -17,7 +17,13 @@ const URL = {
     GET_CINEMA_GROUPS: BASE_DOMAIN + '/cinema-groups/getCinemaGroups',
 
     // Showtime
-    GET_SHOWTIMES: BASE_DOMAIN + '/showtimes/getShowtimes'
+    GET_SHOWTIMES: BASE_DOMAIN + '/showtimes/getShowtimes',
+    GET_ALL_INFO_BY_SHOWTIME: BASE_DOMAIN + '/showtimes/getAllInfoByShowtime/',
+    GET_SHOWTIMES_BY_MOVIE: BASE_DOMAIN + '/showtimes/getShowtimesByMovie/',
+
+    // Booking
+    ADD_BOOKING: BASE_DOMAIN + '/bookings/addBooking',
+    GET_SEATS_BY_SHOWTIME: BASE_DOMAIN + '/bookings/getSeatsByShowtime/'
 }
 
 export { URL, BASE_DOMAIN }

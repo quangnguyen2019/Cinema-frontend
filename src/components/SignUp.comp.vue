@@ -1,37 +1,45 @@
 <template>
     <div class="wrapper-sign-up">
-        <form class="formSignUp" >
-            <h1 class="mt-2 mb-5 text-center">Welcome</h1>
+        <div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="signInUpModal" aria-hidden="true">
+            <div class="modal-dialog cascading-modal" role="document">
+                <div class="modal-content formSignUp">
+                   <form class="modal-body" @submit.prevent="SignUpAuth">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
 
-            <div class="input-group">
-                <input type="text" id="name" v-model="userAdded.full_name" required>
-                <label for="name"> Full Name </label>
+                        <h1 class="mt-2 mb-5 text-center">Welcome</h1>
+
+                        <div class="input-group">
+                            <input type="text" id="name" v-model="userAdded.full_name" required>
+                            <label for="name"> Full Name </label>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="text" id="email-sign-up" v-model="userAdded.email" required>
+                            <label for="email-sign-up"> Email </label>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="password" id="password-sign-up" v-model="userAdded.password" required>
+                            <label for="password-sign-up"> Password </label>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="text" id="phone" v-model="userAdded.phone" required >
+                            <label for="phone"> Phone Number </label>
+                        </div>
+
+                        <button type="submit" class="btnSign-In-UpForm">Sign Up</button>
+
+                        <!-- <p class="backToSignIn">
+                            <router-link to="/signIn"> Cancel </router-link>
+                            <router-view></router-view>
+                        </p> -->
+                    </form>
+                </div>
             </div>
-
-            <div class="input-group">
-                <input type="text" id="email" v-model="userAdded.email" required>
-                <label for="email"> Email </label>
-            </div>
-
-            <div class="input-group">
-                <input type="password" id="password" v-model="userAdded.password" required>
-                <label for="password"> Password </label>
-            </div>
-
-            <div class="input-group">
-                <input type="text" id="phone" v-model="userAdded.phone" required >
-                <label for="phone"> Phone Number </label>
-            </div>
-
-            <button type="button" class="btnSign-In-UpForm" @click.prevent="SignUpAuth">Sign Up</button>
-
-            <div id="snackbar">{{ message }}</div>
-
-            <p class="backToSignIn">
-                <router-link to="/signIn"> Cancel </router-link>
-                <router-view></router-view>
-            </p>
-        </form>
+        </div>
     </div>
 </template>
 
@@ -58,55 +66,46 @@ export default {
             UserService
                 .getUser(this.userAdded.email)
                 .then(response1 => {
-                    console.log(response1.data);
-
-                    this.message = '';
-                    
 
                     if (this.userAdded.full_name == '') {
-                        this.message = 'Full Name is empty !!'
+                        alert('Full Name is empty !!');
                         return;
                     }
 
                     if (this.userAdded.email == '') {
-                        this.message = 'Email is empty !!'
+                        alert('Email is empty !!');
                         return;
                     }
 
                     if (!this.ValidEmail(this.userAdded.email)) {
-                        this.message = 'Invalid Email !!';
+                        alert('Invalid Email !!');
                         return;
                     }
 
                     if (response1.data.email == this.userAdded.email) {
-                        this.message = 'Email already exists !!';
-                        console.log(this.message);
+                        alert('Email already exists !!');
                         return;
                     }
 
                     if (this.userAdded.password == '') {
-                        this.message = 'Password is empty !!'
+                        alert('Password is empty !!');
                         return;
                     }
 
                     if (this.userAdded.phone == '') {
-                        this.message = 'Phone Number is empty !!'
+                        alert('Phone Number is empty !!');
                         return;
                     }
 
                     UserService
                         .addUser(this.userAdded)
                         .then(response => {
-                            this.message = "Registered account successfully !!";
-                            console.log(this.userAdded);
+                            alert("Đăng ký thành công !!");
+                            // console.log(this.userAdded);
                         })
                     
-                    setTimeout(() =>  this.$router.push('/signIn'), 2500);
+                    // setTimeout(() =>  this.$router.push('/'), 1500);
                 })
-
-            var x = document.getElementById("snackbar");
-            x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         },
 
         ValidEmail(email) {
@@ -133,11 +132,15 @@ export default {
 
     .formSignUp {
         padding: 60px;
-        width: 35rem;
-        height: 44rem;
+        width: 31rem;
+        height: 45rem;
         border-radius: 25px;
         box-shadow: 2px 4px 12px rgb(0, 0, 0, .3)
     }
+
+    /* #signUp .btnSign-In-UpForm {
+        padding: 15px 0; 
+    } */
 
     .backToSignIn {
         margin-top: 50px;
