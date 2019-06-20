@@ -50,6 +50,10 @@
                         <div class="booking-title">Thông tin đặt vé</div>
                         <form class="booking-content" @submit.prevent="Booking" v-for="(infor,index) in infoBooking" :key="index">
                             <div class="info-row">
+                                <span class="title">Người đặt: </span>
+                                {{ userBooking }}
+                            </div>
+                            <div class="info-row">
                                 <span class="title">Phim:</span>
                                 {{ infor.movie_name }}
                             </div>
@@ -94,7 +98,8 @@ export default {
             infoBooking: [],
             bookedSeats: [],
             selectingSeatsText: '',
-            priceTotal: 0
+            priceTotal: 0,
+            userBooking: `${this.$session.get('surname')} ${this.$session.get('first_name')}`
         }
     },
     created() {
@@ -176,6 +181,7 @@ export default {
                     .then(response => {
                         console.log("Hello success");
                         alert("Đã đặt vé thành công !");
+                        location.reload();
                     });
 
                 // console.log(bookingInfo);

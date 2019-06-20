@@ -28,7 +28,8 @@
                             <div class="date">{{ showtime.dayOfWeek }} ({{ showtime.date }})</div>
                             <div>
                                 <router-link class="start-time" :to="'/booking/' + startTime.id"
-                                    v-for="(startTime, index) in showtime.startTimes" :key="index">
+                                    v-for="(startTime, index) in showtime.startTimes" :key="index"
+                                    @click.native.prevent="onClickShowtime(startTime.id)">
                                     <b> {{ startTime.time }} </b> - {{ startTime.cinemaGroup }}
                                 </router-link>
                             </div>
@@ -59,6 +60,7 @@ export default {
             .then(response => {
                 this.movie = response.data;
                 this.movie.poster_image = BASE_DOMAIN + '/image/poster/' + this.movie.poster_image;
+                this.movie.publish_date = this.movie.publish_date.split('-').reverse().join('/');
             });
 
         ShowtimeService
@@ -102,7 +104,6 @@ export default {
 
                     let date = showtime.date.split("-").reverse().join("/");
                     
-
                     showtime.dayOfWeek = dayOfWeek;
                     showtime.date = date;
                     
@@ -111,6 +112,15 @@ export default {
                 this.showtimes = showtimesList;
                 console.log('Showtime ==> ', showtimesList);
             });
+    },
+    methods: {
+        onClickShowtime(bookingId) {
+            if (!this.$session.exist()) {
+                // e.preventDefault();
+                // e.stopPropagation();
+                alert("Bạn cần đăng nhập trước khi dùng tính năng này !!");
+            }
+        }
     }
 }
 </script>

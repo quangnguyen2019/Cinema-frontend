@@ -8,8 +8,11 @@ const ShowtimeService = {
     getAllInfoByShowtime(id) {
         return ApiService.get(URL.GET_ALL_INFO_BY_SHOWTIME + id);
     },
-    getShowtimesByMovie(id) {
-        return ApiService.get(URL.GET_SHOWTIMES_BY_MOVIE + id);
+    getShowtimesByMovie(movieId) {
+        return ApiService.get(URL.GET_SHOWTIMES_BY_MOVIE + movieId);
+    },
+    getShowtimesByMovieAndCinemaGr(movieId, cinemaGroupId) {
+        return ApiService.get(URL.GET_SHOWTIMES_BY_MOVIE_AND_CINEMA_GROUP + movieId + '/' + cinemaGroupId);
     }
 };
 

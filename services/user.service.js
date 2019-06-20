@@ -7,6 +7,9 @@ const UserService = {
     },
     addUser(user) {
         return ApiService.post(URL.ADD_USER, user)
+    },
+    updateUser(id, newInfo) {
+        return ApiService.patch(URL.UPDATE_USER + id, newInfo);
     }
 }
 export default UserService

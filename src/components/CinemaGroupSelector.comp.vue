@@ -1,21 +1,31 @@
 <template>
-    <ul>
-        <li v-for="cinemaGroup in cinemaGroupsData" :key="cinemaGroup.id" @click="handleClick">
-            {{ cinemaGroup.name }}
-        </li>
-    </ul>
+    <div class="selector-container">
+        <div class="selector-title">CHỌN RẠP</div>
+        <ul>
+            <li v-for="cinemaGroup in cinemaGroupsData" :key="cinemaGroup.id" 
+                :class="{ 'active': cinemaGroup.id === selectedId }"
+                @click="handleClick(cinemaGroup.id)">
+                {{ cinemaGroup.name }}
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'CinemaGroupList',
+    data() {
+        return {
+            selectedId: -1
+        }
+    },
     props: {
         cinemaGroupsData: Array
     },
     methods: {
-        handleClick() {
-            this.$emit('clickedSomething');
-            console.log('Hello2');
+        handleClick(id) {
+            this.selectedId = id;
+            this.$emit('onClickTheater', id);
         }
     }
 }

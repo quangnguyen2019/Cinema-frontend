@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <CinemaNavbar />
+    <Navbar />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import CinemaNavbar from '@/components/CinemaNavbar.comp'
+import Navbar from '@/components/Navbar.comp'
 
 export default {
   components: {
-    CinemaNavbar
+    Navbar
   }
 }
 </script>

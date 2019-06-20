@@ -5,7 +5,7 @@ import Home from "./views/Home.vue";
 import DetailMovie from "./views/DetailMovie";
 import SearchShowtime from '@/components/SearchShowtime.comp';
 import Booking from './views/Booking';
-import Account from './components/Account.comp';
+import Account from './views/Account';
 
 Vue.use(VueSession)
 Vue.use(Router);

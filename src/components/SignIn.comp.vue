@@ -17,10 +17,10 @@
                         </div>
                         <div class="input-group">
                             <input type="password" id="passwordSignIn" v-model="passwordValue" required>
-                            <label for="passwordSignIn"> Password </label>
+                            <label for="passwordSignIn"> Mật Khẩu </label>
                         </div>
 
-                        <button type="submit" class="btnSign-In-UpForm">Sign In</button>
+                        <button type="submit" class="btnSign-In-UpForm">Đăng Nhập</button>
 
                         <!-- <p class="linkSignUp">
                             Don&apos;t have an account?
@@ -53,28 +53,22 @@ export default {
                 .then(response => {
                     this.user = response.data;
 
-                    if (this.emailValue === '') {
-                        alert('Email is empty !!');
-                    }
-
                     if (this.user.success === false) {
-                        alert( "User Account does not exist !!");
-                        return;
-                    }
-
-                    if (this.passwordValue === '') {
-                        alert('Password is empty !!');
+                        alert( "Email người dùng không tồn tại !!");
                         return;
                     }
 
                     if (this.user.password!= this.passwordValue) {
-                        alert('Password does not correct !!');
+                        alert('Mật khẩu không đúng !!');
                         return;
                     }
 
                     // console.log('Logged User: ', this.user);
                     this.$session.start();
                     this.$session.set('user-id', this.user.id);
+                    this.$session.set('first_name', this.user.first_name);
+                    this.$session.set('surname', this.user.surname);
+                    this.$session.set('user-email', this.user.email);
                     location.reload();
                 });
         },
